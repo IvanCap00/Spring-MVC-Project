@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymelead.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>club-edit</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+</head>
+<body>
+
+
+
+	<header>
+
+		<div class="navbar navbar-dark bg-dark box-shadow">
+			<div class="container d-flex justify-content-between">
+				<a href="#" class="navbar-brand d-flex align-items-center"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+						viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="mr-2">
+						<path
+							d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+						<circle cx="12" cy="13" r="4"></circle></svg> <strong>ClubCenter</strong>
+						<a  th:href="@{/clubs2}">Home</a>
+				</a>
+
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+
+		<section class="jumbotron text-center">
+			<div class="container">
+				<h1 class="jumbotron-heading">Club Center</h1>
+				<p class="lead text-muted">Something short and leading about the
+					collection below its contents, the creator, etc. Make it short and
+					sweet, but not too short so folks don't simply skip over it
+					entirely.</p>
+				<p>
+					<a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
+						un Club</a> <a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
+						un Club</a>
+				</p>
+			</div>
+		</section>
+	
+
+
+		<div class="container">
+			<form role="form" method="post"
+				th:action="@{/events/{Id}/{clubId}/edit(Id=${eventoDaModificare.Id},clubId=${clubId})}" th:object="${eventoDaModificare}">
+
+				<input type="hidden" th:field="*{Id}"> <input type="hidden"
+					th:field="*{createdin}"> <input type="hidden"
+					th:field="*{updatedon}">
+					 
+
+
+				<!-- l'oggetto arriva correttamente -->
+
+
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" id="title" name="title"
+						placeholder="title" th:field="*{nome}"> <label
+						for="floatingInput"> Title</label>
+					
+				</div>
+
+				<div class="form-floating">
+					<textarea class="form-control" placeholder="contenuto"
+						id="floatingTextarea" th:field="*{contenuto}"></textarea>
+					<label for="floatingTextarea">Contenuto</label>
+					
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputPassword4">Photo Url</label> <input type="text"
+						class="form-control" id="photourl" name="photourl"
+						th:field="*{photourl}" placeholder="photourl">
+					
+				</div>
+				<div class="form-floating">
+					<input type="datetime-local" class="form-control" id="floatingPassword"
+						 th:field="*{starttime}"> <label
+						for="floatingPassword">start-time</label>
+						
+					
+				</div>
+				<br>
+				<div class="form-floating">
+					<input type="datetime-local" class="form-control" placeholder="contenuto"
+						 th:field="*{endtime}"></input>
+					<label for="floatingTextarea">end-time</label>
+					
+				</div>
+
+
+				<!--  
+			</div>
+			<div class="form-group">
+				<label for="inputAddress">Content</label> <input type="text"
+					class="form-control" id="content" name="content"
+					th:field="*{content}" placeholder="content">
+				<p th:if="${#fields.hasErrors('content')}" class="text-danger"
+					th:errors="*{content}"></p>
+			</div>-->
+				<button type="submit">salva</button>
+			</form>
+		</div>
+		<!--  
+			<div class="form-group">
+				<label for="inputAddress">created In</label> <input type="text"
+					class="form-control" id="content" name="content"
+					th:field="*{createdin}" placeholder="createdin">
+				<p th:if="${#fields.hasErrors('createdin')}" class="text-danger"
+					th:errors="*{createdin}"></p>
+			</div>
+			<div class="form-group">
+				<label for="inputAddress">updated On</label> <input type="text"
+					class="form-control" id="content" name="content"
+					th:field="*{updatedon}" placeholder="updatedon">
+				<p th:if="${#fields.hasErrors('updatedon')}" class="text-danger"
+					th:errors="*{updatedon}"></p>
+			</div>
+			
+			<button type="submit">salva</button>
+		</form>-->
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+			crossorigin="anonymous"></script>
+</body>
+</html>
