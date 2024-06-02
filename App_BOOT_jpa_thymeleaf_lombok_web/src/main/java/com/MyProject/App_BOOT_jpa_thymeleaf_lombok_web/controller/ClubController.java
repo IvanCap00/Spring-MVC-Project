@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,8 +22,11 @@ import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.dto.ClubDto;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.dto.EventoDto;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.models.Club;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.models.Evento;
+import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.models.Userentity;
+import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.repository.UserEntityRepository;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.service.ClubService;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.service.EventService;
+import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.service.UserService;
 import com.MyProject.App_BOOT_jpa_thymeleaf_lombok_web.service.Impl.ClubServiceImpl;
 
 import aj.org.objectweb.asm.Attribute;
@@ -36,13 +43,15 @@ public class ClubController {
 	// ho provato e funzionano  entrambe
 	private ClubService clubservice;
 	private EventService eventservice;
+	private UserService userservice;
 
 	
 	@Autowired
-	public ClubController(ClubService clubservice , EventService eventservice) {
+	public ClubController(ClubService clubservice , EventService eventservice, UserService userservice) {
 		super();
 		this.clubservice = clubservice;
 		this.eventservice = eventservice;
+		this.userservice = userservice;
 	}
 	
 	
@@ -207,4 +216,83 @@ public class ClubController {
 		return "redirect:/clubs2";
 	}
 	
+	
+	
+	
+	/*
+	 * 
+	 *  @PostMapping("/user/save")
+    public ResponseEntity<Object> saveUSer(@RequestBody OurUser ourUser){
+        ourUser.setPassword(passwordEncoder.encode(ourUser.getPassword()));
+        OurUser result = ourUserRepo.save(ourUser);
+        if (result.getId() > 0){
+            return ResponseEntity.ok("USer Was Saved");
+        }
+        return ResponseEntity.status(404).body("Error, USer Not Saved");
+    }
+	 */
+	@Autowired
+	private PasswordEncoder paswordencoder;
+	
+	@Autowired
+	private UserEntityRepository userrepository;
+	
+	
+	/*
+	@PostMapping("/user/new")
+	public ResponseEntity<Object> saveUser(@RequestBody Userentity userentity ){
+		userentity.setPass_word(paswordencoder.encode(userentity.getPass_word()));
+		Userentity result = userrepository.save(userentity);
+		if (result.getId() > 0){
+            return ResponseEntity.ok("USer Was Saved");
+        }
+        return ResponseEntity.status(404).body("Error, USer Not Saved");
+    }
+		
+	*/
+	@GetMapping("/user-new")
+	public String createUserForm(Model model) {
+		Userentity userentity = new Userentity();
+		model.addAttribute("User", userentity);
+		return "UserNew";
+		
+	}
+	
+	@PostMapping("user-new")
+	public String saveUser(@Valid @ModelAttribute("User") Userentity userentity, BindingResult result, Model model) {
+		
+		if (result.hasErrors()) {
+			model.addAttribute("User", userentity);
+			return "user-new";
+		}
+		String encoded_password = paswordencoder.encode(userentity.getPass_word());
+		userentity.setPass_word(encoded_password);
+		userrepository.save(userentity);
+		return "redirect:/clubs2";
+	}
+	
+	@GetMapping("/user-list")
+	public String listUser(Model model) {
+		List<Userentity> all = userservice.findAll();
+		model.addAttribute("Utenti", all);
+		return "User-list";
+		// il return è il nome della pagina su cui vai è l'equivalente del forward di una servlet
+	}
+	
+	@GetMapping("/user-list/{UserId}/delete")
+	public String deleteUser(@PathVariable("UserId") long UserId) {
+		userservice.deleteUser(UserId);
+		
+		return "redirect:/user-list";
+		
+	}
+	
+	/*
+	
+	@GetMapping("/login")
+	public String handleLogin() {
+		return "MyLogin";
+	}
+			
+	*/
 }

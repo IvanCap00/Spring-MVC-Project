@@ -1,0 +1,147 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="https://thymelead.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+<title>Album example for Bootstrap</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.0/examples/album/">
+
+<!-- Bootstrap core CSS -->
+<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="album.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<header>
+
+		<div class="navbar navbar-dark bg-dark box-shadow">
+			<div class="container d-flex justify-content-between">
+				<a href="#" class="navbar-brand d-flex align-items-center"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+						viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+						class="mr-2">
+						<path
+							d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+						<circle cx="12" cy="13" r="4"></circle></svg> <strong>ClubCenter</strong>
+				</a>
+
+			</div>
+		</div>
+	</header>
+
+	<main role="main">
+
+		<section class="jumbotron text-center">
+			<div class="container">
+				<h1 class="jumbotron-heading">Club Center</h1>
+				<p class="lead text-muted">Something short and leading about the
+					collection below its contents, the creator, etc. Make it short and
+					sweet, but not too short so folks don't simply skip over it
+					entirely.</p>
+				<p>
+					<a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
+						un Club</a> <a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
+						un Club</a>
+				</p>
+				
+
+			</div>
+		</section>
+
+
+
+
+		<!-- card -->
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="row">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">Username</th>
+								<th scope="col">Password</th>
+								<th scope="col">Ruolo</th>
+							</tr>
+						</thead>
+
+						<!-- l'iterazione va piazzata all inizio della card altrimenti verranno  ripetuti solo i contenuti -->
+						<div class="col-md-4" th:each="Utente :${Utenti}">
+							<div class="card mb-4 box-shadow">
+
+
+								<tbody>
+									<tr>
+										<th scope="row">1</th>
+										<td th:text="${Utente.username}"></td>
+										<td th:text="${Utente.pass_word}"></td>
+										<td th:text="${Utente.role}"></td>
+										<td><a
+									class="btn btn-primary "
+									th:href="@{/user-list/{UserId}/delete(UserId=${Utente.Id})}">Elimina</a></td>
+									</tr>
+									
+								</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+
+	</main>
+
+	<footer class="text-muted">
+		<div class="container">
+			<p class="float-right">
+				<a href="#">Back to top</a>
+			</p>
+			<p>Album example is &copy; Bootstrap, but please download and
+				customize it for yourself!</p>
+			<p>
+				New to Bootstrap? <a href="../../">Visit the homepage</a> or read
+				our <a href="../../getting-started/">getting started guide</a>.
+			</p>
+		</div>
+	</footer>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+	</script>
+	<script src="../../assets/js/vendor/popper.min.js"></script>
+	<script src="../../dist/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/vendor/holder.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>
