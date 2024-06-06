@@ -60,9 +60,10 @@
 						un Club</a>
 				</p>
 				<div class="mb-3">
-				<form th:action="@{/clubs/search}">
-					<input name="query" type="search" placeholder="Cerca fra i club attivi" class="form-control" >
-				</form>
+					<form th:action="@{/clubs/search}">
+						<input name="query" type="search"
+							placeholder="Cerca fra i club attivi" class="form-control">
+					</form>
 				</div>
 
 			</div>
@@ -95,10 +96,9 @@
 									th:href="@{/clubs/{clubId}/delete(clubId=${club.Id})}">Elimina</a>
 								<br> <br> <a class="btn btn-primary "
 									th:href="@{/clubs/{clubId}(clubId=${club.Id})}">Visualizza
-									dettaglio</a>
-									<a
-									class="btn btn-primary "
-									th:href="@{/events/{clubid}/new(clubid=${club.Id})}">Aggiungi un evento per questo club</a>
+									dettaglio</a> <a class="btn btn-primary "
+									th:href="@{/events/{clubid}/new(clubid=${club.Id})}">Aggiungi
+									un evento per questo club</a>
 								<div class="d-flex justify-content-between align-items-center">
 
 
@@ -129,14 +129,17 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- il pezzo di javascript richiede di specificare solo /js, il tag "inizia a cercare" sullo stesso "ramo" sui
+	cui si trova la pagina html, in questo caso la pagina appartiene a static quindi dobbiamo specificare solo da static in giù -->
+	<script type="text/javascript" th:src="@{/js/javascriptclubs2.js}"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
 	<script>
-		window.jQuery
-				|| document
-						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-	</script>
+	window.jQuery
+		|| document
+			.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
 	<script src="../../assets/js/vendor/popper.min.js"></script>
 	<script src="../../dist/js/bootstrap.min.js"></script>
 	<script src="../../assets/js/vendor/holder.min.js"></script>
