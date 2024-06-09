@@ -153,26 +153,7 @@
 	
 	  var username = /*[[${cu}]]*/ "";
 		console.log(username);
-	if(username == null){
-	    console.log("username è null");
-	    const listaBottoni = document.querySelectorAll('[id=bottoneAdmin]');
-	    console.log(listaBottoni);
-	    for (let bottone of listaBottoni){
-			console.log(bottone)
-			bottone.style.visibility = "hidden"
-	    }
-	    
-	} else {
-	    console.log("username non è null");
-	    console.log(username.username)
-	    window.alert(username.username)
-	    if (username.authorities[0] = "ROLE_ADMIN"){
-		console.log("admin")
-		
-	    }else if(username.authorities[0] = "ROLE_USER") {
-		console.log("utente")
-	    }
-	}
+	
 	
 		
 	
