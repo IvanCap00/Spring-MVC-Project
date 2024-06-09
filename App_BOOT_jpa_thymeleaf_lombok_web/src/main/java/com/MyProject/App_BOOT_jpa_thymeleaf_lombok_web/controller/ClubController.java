@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -74,7 +76,14 @@ public class ClubController {
 	//fanno la stessa cosa ovvero mappano il perscorso a un url, fanno la stessa cosa della servlet
 	//questo metodo sta dicendo "quando accedi all'URL loclahost8080/clubs2 mostra la pagina clubs-list2.html"
 	@GetMapping("/clubs2")
-	public String listClubs2(Model model) {
+	public String listClubs2(Model model, Authentication authentication) {
+		
+		if (authentication != null) {
+			User u = (User)authentication.getPrincipal();
+			model.addAttribute("cu", u);
+		}
+		
+		
 		List<ClubDto> clubs = clubservice.findallClubs();
 		model.addAttribute("clubs",clubs);
 		return "clubs-list2";

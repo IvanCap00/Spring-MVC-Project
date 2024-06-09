@@ -58,7 +58,22 @@
 					<a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
 						un Club</a> <a class="btn btn-secondary my-2" th:href="@{/clubs/new}">Aggiungi
 						un Club</a>
+
 				</p>
+				<div>
+
+					Current user:</br>
+					<div th:if="${cu}">
+						<span id="username"   th:text=${cu.username}></span></br> Password: [[${cu.password}]]</br> Role:
+						[[${cu.authorities[0]}]]</br> Enabled: [[${cu.enabled}]]</br> 
+						<!--  
+						Full:
+						[[${cu}]]</br>-->
+					</div>
+					<div th:unless="${cu}">Not logged-in!</div>
+
+
+				</div>
 				<div class="mb-3">
 					<form th:action="@{/clubs/search}">
 						<input name="query" type="search"
@@ -91,13 +106,13 @@
 								<p>modificato nel:</p>
 								<h5 th:text="${club.updatedon}"></h5>
 								<a class="btn btn-primary "
-									th:href="@{/clubs/{Id}/edit(Id=${club.Id})}">Modifica</a> <a
+									th:href="@{/clubs/{Id}/edit(Id=${club.Id})}" id="bottoneAdmin">Modifica</a> <a
 									class="btn btn-primary "
-									th:href="@{/clubs/{clubId}/delete(clubId=${club.Id})}">Elimina</a>
+									th:href="@{/clubs/{clubId}/delete(clubId=${club.Id})}" id="bottoneAdmin">Elimina</a>
 								<br> <br> <a class="btn btn-primary "
 									th:href="@{/clubs/{clubId}(clubId=${club.Id})}">Visualizza
 									dettaglio</a> <a class="btn btn-primary "
-									th:href="@{/events/{clubid}/new(clubid=${club.Id})}">Aggiungi
+									th:href="@{/events/{clubid}/new(clubid=${club.Id})}"id="bottoneAdmin">Aggiungi
 									un evento per questo club</a>
 								<div class="d-flex justify-content-between align-items-center">
 
@@ -131,6 +146,40 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<!-- il pezzo di javascript richiede di specificare solo /js, il tag "inizia a cercare" sullo stesso "ramo" sui
 	cui si trova la pagina html, in questo caso la pagina appartiene a static quindi dobbiamo specificare solo da static in giù -->
+	<!-- quindi è necessario avere th:inline altrimente non vede il javascript -->
+	<script th:inline="javascript">
+	
+	/*<![CDATA[*/
+	
+	  var username = /*[[${cu}]]*/ "";
+		console.log(username);
+	if(username == null){
+	    console.log("username è null");
+	    const listaBottoni = document.querySelectorAll('[id=bottoneAdmin]');
+	    console.log(listaBottoni);
+	    for (let bottone of listaBottoni){
+			console.log(bottone)
+			bottone.style.visibility = "hidden"
+	    }
+	    
+	} else {
+	    console.log("username non è null");
+	    console.log(username.username)
+	    window.alert(username.username)
+	    if (username.authorities[0] = "ROLE_ADMIN"){
+		console.log("admin")
+		
+	    }else if(username.authorities[0] = "ROLE_USER") {
+		console.log("utente")
+	    }
+	}
+	
+		
+	
+	/*]]>*/
+	
+	
+	</script>
 	<script type="text/javascript" th:src="@{/js/javascriptclubs2.js}"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
